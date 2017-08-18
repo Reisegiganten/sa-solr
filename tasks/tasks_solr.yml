@@ -2,6 +2,7 @@
 
   - name: SOLR | Check if is present
     command: "test -x /opt/solr-{{solr_version}}/bin"
+    changed_when: false
     ignore_errors: yes
     register: solr_present
 
@@ -14,13 +15,14 @@
     when: solr_present | failed
 
   - name: SOLR | Unpack wizard shell script
-    shell: "tar xzf solr-{{solr_version}}.tgz solr-{{solr_version}}/bin/install_solr_service.sh --strip-components=2"
+    command: "tar xzf solr-{{solr_version}}.tgz solr-{{solr_version}}/bin/install_solr_service.sh --strip-components=2"
     args:
       chdir: "{{solr_download_dir}}"
+      warn: false
     when: solr_present | failed
 
   - name: SOLR | Execute magic wizard
-    shell: "./install_solr_service.sh solr-{{solr_version}}.tgz -f -d {{solr_files_path}} -i {{solr_install_path}} -p {{solr_port}} -s {{solr_service}} -u {{solr_user}}"
+    command: "./install_solr_service.sh solr-{{solr_version}}.tgz -f -d {{solr_files_path}} -i {{solr_install_path}} -p {{solr_port}} -s {{solr_service}} -u {{solr_user}}"
     args:
       chdir: "{{solr_download_dir}}"
     become: yes
