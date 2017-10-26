@@ -22,7 +22,7 @@
     when: solr_present | failed
 
   - name: SOLR | Execute magic wizard
-    command: "./install_solr_service.sh solr-{{solr_version}}.tgz -f -d {{solr_files_path}} -i {{solr_install_path}} -p {{solr_port}} -s {{solr_service}} -u {{solr_user}}"
+    command: "./install_solr_service.sh solr-{{solr_version}}.tgz -n -f -d {{solr_files_path}} -i {{solr_install_path}} -p {{solr_port}} -s {{solr_service}} -u {{solr_user}}"
     args:
       chdir: "{{solr_download_dir}}"
     become: yes
