@@ -4,7 +4,7 @@
   root_dir: "{{ role_path }}"
   role_dir: "{{ role_path }}"
 
-  java_version: 8
+  java_version: 10
   option_install_java: false
 
   solr_version: 6.5.0
